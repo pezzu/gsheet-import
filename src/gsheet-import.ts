@@ -34,10 +34,12 @@ function print(data: sheets_v4.Schema$ValueRange): void {
   console.log(data.values);
 }
 
-function main(): void {
-  const auth = createAuth(params.keyFile);
-  const values = fetchGSheets(auth, params.spreadsheetId, params.range);
-  values.then(print);
-}
+if (require.main === module) {
+  function main(): void {
+    const auth = createAuth(params.keyFile);
+    const values = fetchGSheets(auth, params.spreadsheetId, params.range);
+    values.then(print);
+  }
 
-main();
+  main();
+}
