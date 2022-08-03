@@ -5,13 +5,10 @@
   "tasks": [
     {
       "label": "watch",
-      "command": "npm",
-      "args": [
-        "run",
-        "watch"
-      ],
+      "type": "npm",
+      "script": "watch",
       "isBackground": true,
-      "problemMatcher": ["$tsc-watch"]
+      "problemMatcher": ["$tsc"]
     }
   ]
 }
