@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env:
+        GCP_ACCESS_CREDENTIALS: ${{ secrets.GCP_ACCESS_CREDENTIALS }}
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
