@@ -53,7 +53,7 @@ describe("Generates HTML", () => {
     expect(dom.window.document.querySelector("p")!.textContent).toEqual("World");
   });
 
-  it("throws an error if data misses a key", () => {
+  it("Throws an error if data misses a key", () => {
     const template = `
       <!DOCTYPE html>
       <html lang="en">
