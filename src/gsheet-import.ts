@@ -25,8 +25,7 @@ async function main(): Promise<void> {
   try {
     const params = JSON.parse(readFileSync("app-settings.json", "utf8"));
 
-    const values = await fetch(params.credentials, params.sheet);
-    const cells = values?.values ?? [];
+    const cells = await fetch(params.credentials, params.sheet);
     if (cells.length > 0) {
       const table = toHtmlTable(cells);
       const html = renderHtml(HTML_TEMPLATE, { content: table });

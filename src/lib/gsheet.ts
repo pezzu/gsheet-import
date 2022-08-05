@@ -15,15 +15,10 @@ export type SheetOptions = {
   range?: string;
 };
 
-export function createAuth(authOpts: Auth.GoogleAuth | Auth.GoogleAuthOptions): Auth.GoogleAuth {
+export function createAuth(authOpts: Auth.GoogleAuth | AuthOptions): Auth.GoogleAuth {
   if (authOpts instanceof Auth.GoogleAuth) {
     return authOpts;
-  } else if (
-    authOpts.authClient ||
-    authOpts.keyFile ||
-    authOpts.keyFilename ||
-    authOpts.credentials
-  ) {
+  } else if (authOpts.keyFile || authOpts.keyFilename || authOpts.credentials) {
     const scopes = authOpts.scopes ?? ["https://www.googleapis.com/auth/spreadsheets.readonly"];
     return new google.auth.GoogleAuth({ ...authOpts, scopes });
   } else {
@@ -31,9 +26,13 @@ export function createAuth(authOpts: Auth.GoogleAuth | Auth.GoogleAuthOptions): 
   }
 }
 
-export async function fetch(authOpts: Auth.GoogleAuth | Auth.GoogleAuthOptions, sheetOpts: SheetOptions): Promise<sheets_v4.Schema$ValueRange> {
+export async function fetch(
+  authOpts: Auth.GoogleAuth | AuthOptions,
+  sheetOpts: SheetOptions
+): Promise<any[][]> {
   const auth = createAuth(authOpts);
   const sheets = google.sheets({ version: "v4", auth });
-  const values = sheets.spreadsheets.values.get(sheetOpts);
-  return (await values).data;
+  const cells = await sheets.spreadsheets.values.get(sheetOpts);
+  if (!cells.data.values) return [];
+  return cells.data.values;
 }
