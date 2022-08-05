@@ -1,11 +1,7 @@
-import { createAuth, fetchGSheets } from "./lib/gsheet";
+import { readFileSync } from "fs";
+import { fetch } from "./lib/gsheet";
 import { toHtmlTable, renderHtml } from "./lib/html";
-
-const params = {
-  keyFile: "./credentials.json",
-  spreadsheetId: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
-  range: "Class Data!A2:E3",
-};
+import { sendMail } from "./lib/mail";
 
 function print(data: any): void {
   console.log(data);
@@ -15,23 +11,28 @@ const HTML_TEMPLATE = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
 <body>
-  {{content}}
+{{content}}
 </body>
 </html>
 `;
 
 async function main(): Promise<void> {
   try {
-    const auth = createAuth(params.keyFile);
-    const values = await fetchGSheets(auth, params.spreadsheetId, params.range);
-    const table = toHtmlTable(values.values || [[]]);
-    const html = renderHtml(HTML_TEMPLATE, { content: table });
-    print(html);
+    const params = JSON.parse(readFileSync("app-settings.json", "utf8"));
+
+    const values = await fetch(params.credentials, params.sheet);
+    const cells = values?.values ?? [];
+    if (cells.length > 0) {
+      const table = toHtmlTable(cells);
+      const html = renderHtml(HTML_TEMPLATE, { content: table });
+      await sendMail(params.mail.transport, { ...params.mail.message, html });
+      print(`Mail sent to ${params.mail.message.to}`);
+    }
   } catch (e) {
     console.error(e);
   }
