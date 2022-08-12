@@ -1,0 +1,23 @@
+{
+	"credentials": {
+		"keyFile": "credentials.json"
+	},
+	"sheet" : {
+		"spreadsheetId": "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
+		"range": "Class Data!A2:E5"
+	},
+	"mail" : {
+		"transport": {
+			"host": "smtp.domain.com",
+			"port": 25
+		},
+		"message": {
+			"from": "Mail Bot <bot@domain.com>",
+			"to": "user@domain.com",
+			"subject": "Mail Subject"
+		},
+    "template": {
+      "file": "templates/message.html"
+    }
+	}
+}
