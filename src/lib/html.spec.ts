@@ -27,7 +27,7 @@ describe("Generates HTML", () => {
     });
   });
 
-  it("Should render mustache templates", () => {
+  it("Should render mustache templates with multiple keys", () => {
     const template = `
       <!DOCTYPE html>
       <html lang="en">
