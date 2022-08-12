@@ -12,7 +12,7 @@ async function main(): Promise<void> {
     const params = JSON.parse(readFileSync("app-settings.json", "utf8"));
 
     const cells = await fetch(params.credentials, params.sheet);
-    if (cells.length > 0) {
+    if (cells.length > 1) {
       const table = toHtmlTable(cells);
       const template = readFileSync(params.mail.template.file, "utf8");
       const html = renderHtml(template, { content: table });
