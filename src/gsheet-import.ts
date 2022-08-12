@@ -16,9 +16,8 @@ async function main(): Promise<void> {
       const table = toHtmlTable(cells);
       const template = readFileSync(params.mail.template.file, "utf8");
       const html = renderHtml(template, { content: table });
-      // await sendMail(params.mail.transport, { ...params.mail.message, html });
-      // print(`Mail sent to ${params.mail.message.to}`);
-      print(html);
+      await sendMail(params.mail.transport, { ...params.mail.message, html });
+      print(`Mail sent to ${params.mail.message.to}`);
     }
   } catch (e) {
     console.error(e);
