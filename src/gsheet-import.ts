@@ -3,6 +3,7 @@ import { fetch } from "./lib/gsheet";
 import { toHtmlTable, renderHtml } from "./lib/html";
 import { sendMail } from "./lib/mail";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function print(data: any): void {
   console.log(data);
 }

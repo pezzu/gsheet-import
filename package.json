@@ -10,7 +10,8 @@
     "build": "tsc --project .",
     "watch": "tsc --project . --watch --noEmit",
     "start": "node ./dist/gsheet-import",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^16.0.1",
@@ -22,6 +23,9 @@
     "@types/jsdom": "^20.0.0",
     "@types/node": "^18.0.6",
     "@types/nodemailer": "^6.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.33.1",
+    "@typescript-eslint/parser": "^5.33.1",
+    "eslint": "^8.22.0",
     "jest": "^28.1.3",
     "jsdom": "^20.0.0",
     "nodemon": "^2.0.19",

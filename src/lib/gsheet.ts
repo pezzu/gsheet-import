@@ -29,6 +29,7 @@ export function createAuth(authOpts: Auth.GoogleAuth | AuthOptions): Auth.Google
 export async function fetch(
   authOpts: Auth.GoogleAuth | AuthOptions,
   sheetOpts: SheetOptions
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any[][]> {
   const auth = createAuth(authOpts);
   const sheets = google.sheets({ version: "v4", auth });
@@ -37,6 +38,7 @@ export async function fetch(
   return adjustRowsLength(cells.data.values);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function adjustRowsLength(rows: any[][]): any[][] {
   const maxLength = rows.reduce((max, row) => Math.max(max, row.length), 0);
   return rows.map((row) => [...row, ...Array(maxLength - row.length).fill("")]);

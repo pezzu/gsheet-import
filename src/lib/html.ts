@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function toHtmlTable(data: any[][]): string {
   const html =
     "<table>\n" +
@@ -15,11 +16,11 @@ export function toHtmlTable(data: any[][]): string {
   return html;
 }
 
-export function renderHtml(template: string, data: any): string {
+export function renderHtml(template: string, fields: { [key: string]: string }): string {
   return template.replace(/{{(.*?)}}/g, (_, key) => {
-    if (!data[key]) {
+    if (!fields[key]) {
       throw new Error(`Missing data for key: ${key}`);
     }
-    return data[key];
+    return fields[key];
   });
 }
