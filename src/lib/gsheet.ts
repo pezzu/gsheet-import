@@ -34,5 +34,10 @@ export async function fetch(
   const sheets = google.sheets({ version: "v4", auth });
   const cells = await sheets.spreadsheets.values.get(sheetOpts);
   if (!cells.data.values) return [];
-  return cells.data.values;
+  return adjustRowsLength(cells.data.values);
+}
+
+function adjustRowsLength(rows: any[][]): any[][] {
+  const maxLength = rows.reduce((max, row) => Math.max(max, row.length), 0);
+  return rows.map((row) => [...row, ...Array(maxLength - row.length).fill("")]);
 }

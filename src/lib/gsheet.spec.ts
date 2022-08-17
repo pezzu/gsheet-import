@@ -65,7 +65,7 @@ describe("Imports data from Google Sheets to HTML", () => {
     expect(cells).toEqual([]);
   });
 
-  it.skip("Should add empty cells to secondary direction (COLUMNS) if cells not contain any values", async () => {
+  it("Should add empty cells to secondary direction (COLUMNS) if cells not contain any values", async () => {
     const cells = await fetch(
       { keyFile: CREDENTIALS_FILE },
       {
