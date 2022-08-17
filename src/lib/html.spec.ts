@@ -21,13 +21,17 @@ describe("Generates HTML", () => {
 
     Array.from(table!.children[0].children).forEach((row, i) => {
       expect(row.children.length).toEqual(4);
+      expect(row.tagName).toEqual("TR");
       Array.from(row.children).forEach((cell, j) => {
+        if(i > 0) {
+          expect(cell.tagName).toEqual("TD");
+        }
         expect(cell.textContent).toEqual(`${i + 1}-${j + 1}`);
       });
     });
   });
 
-  it.skip("Should generate 1st row as HTML table header", () => {
+  it("Should generate 1st row as HTML table header", () => {
     const data = [
       ["H1", "H2", "H3", "H4"],
       ["1-1", "1-2", "1-3", "1-4"],
@@ -42,11 +46,12 @@ describe("Generates HTML", () => {
     expect(table).toBeTruthy();
     expect(table!.children[0].tagName).toEqual("TBODY");
     expect(table!.children[0].children.length).toEqual(4);
-    expect(table!.children[0].children[0].tagName).toEqual("TH");
+    expect(table!.children[0].children[0].tagName).toEqual("TR");
 
     const header = table!.children[0].children[0];
     expect(header.children.length).toEqual(4);
     Array.from(header.children).forEach((cell, j) => {
+      expect(cell.tagName).toEqual("TH");
       expect(cell.textContent).toEqual(`H${j + 1}`);
     });
   });
