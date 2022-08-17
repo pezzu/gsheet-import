@@ -27,6 +27,32 @@ describe("Generates HTML", () => {
     });
   });
 
+  it.skip("Should generate 1st row as HTML table header", () => {
+    const data = [
+      ["H1", "H2", "H3", "H4"],
+      ["1-1", "1-2", "1-3", "1-4"],
+      ["2-1", "2-2", "2-3", "2-4"],
+      ["3-1", "3-2", "3-3", "3-4"],
+    ];
+
+    const html = toHtmlTable(data);
+    const dom = new JSDOM(html);
+
+    const table = dom.window.document.querySelector("table");
+    expect(table).toBeTruthy();
+    expect(table!.children[0].tagName).toEqual("TBODY");
+    expect(table!.children[0].children.length).toEqual(4);
+    expect(table!.children[0].children[0].tagName).toEqual("TH");
+
+    const header = table!.children[0].children[0];
+    expect(header.children.length).toEqual(4);
+    Array.from(header.children).forEach((cell, j) => {
+      expect(cell.textContent).toEqual(`H${j + 1}`);
+    });
+  });
+});
+
+describe("Renders documents from templates", () => {
   it("Should render mustache templates with multiple keys", () => {
     const template = `
       <!DOCTYPE html>

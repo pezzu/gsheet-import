@@ -3,8 +3,8 @@ import { writeFile, unlink, NoParamCallback } from "fs";
 import { createAuth, fetch } from "./gsheet";
 
 const CREDENTIALS_FILE = "test_credentials.json";
-// see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-const GOOGLE_TEST_CHEET = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
+// see https://docs.google.com/spreadsheets/d/1n5mK1NpGXcEsDo9N2ybFFTOlTC39KVEq2FUex3XRG7Q/edit
+const GOOGLE_TEST_CHEET = "1n5mK1NpGXcEsDo9N2ybFFTOlTC39KVEq2FUex3XRG7Q";
 
 function createCredentialsFile(done: NoParamCallback) {
   writeFile(CREDENTIALS_FILE, process.env.GCP_ACCESS_CREDENTIALS!, done);
@@ -53,7 +53,7 @@ describe("Imports data from Google Sheets to HTML", () => {
     ]);
   });
 
-  it("Should return empty array if cells not contain any values", async () => {
+  it("Should return empty (ROWS) array if cells not contain any values", async () => {
     const cells = await fetch(
       { keyFile: CREDENTIALS_FILE },
       {
@@ -63,6 +63,21 @@ describe("Imports data from Google Sheets to HTML", () => {
     );
 
     expect(cells).toEqual([]);
+  });
+
+  it.skip("Should add empty cells to secondary direction (COLUMNS) if cells not contain any values", async () => {
+    const cells = await fetch(
+      { keyFile: CREDENTIALS_FILE },
+      {
+        spreadsheetId: GOOGLE_TEST_CHEET,
+        range: "Class Data!A28:F31",
+      }
+    );
+
+    expect(cells[0]).toEqual(["Sean", "Male", "1. Freshman", "NH", "", "Track & Field"]);
+    expect(cells[1]).toEqual(["Stacy", "Female", "1. Freshman", "NY", "", "Baseball"]);
+    expect(cells[2]).toEqual(["Thomas", "Male", "2. Sophomore", "RI", "Art", ""]);
+    expect(cells[3]).toEqual(["Will", "Male", "4. Senior", "FL", "Math", ""]);
   });
 
   it("Should throw if auth param neither GoogleAuth nor AuthOptions", () => {

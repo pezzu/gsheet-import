@@ -1,4 +1,4 @@
-import { google, sheets_v4, Auth } from "googleapis";
+import { google, Auth } from "googleapis";
 
 export type AuthOptions = {
   keyFilename?: string;
