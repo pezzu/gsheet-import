@@ -3,6 +3,7 @@ import { fetch } from "./lib/gsheet";
 import { toHtmlTable, renderHtml } from "./lib/html";
 import { sendMail } from "./lib/mail";
 import { readConfig } from "./lib/config";
+import { getConfigFilesFromCmdLine } from "./lib/cmdline";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function print(data: any): void {
@@ -10,7 +11,12 @@ function print(data: any): void {
 }
 
 async function main(): Promise<void> {
-  const params = readConfig("app-settings.json");
+  const configFiles = getConfigFilesFromCmdLine(process.argv);
+  if(configFiles.length === 0) {
+    configFiles.push("app-settings.json");
+  }
+
+  const params = readConfig(configFiles);
 
   params.forEach(async (param) => {
     try {
