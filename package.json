@@ -19,6 +19,8 @@
     "nodemailer": "^6.7.7"
   },
   "devDependencies": {
+    "@swc/core": "^1.2.244",
+    "@swc/jest": "^0.2.22",
     "@types/jest": "^28.1.6",
     "@types/jsdom": "^20.0.0",
     "@types/node": "^18.7.13",
@@ -29,7 +31,6 @@
     "jest": "^28.1.3",
     "jsdom": "^20.0.0",
     "nodemon": "^2.0.19",
-    "ts-jest": "^28.0.7",
     "typescript": "^4.7.4"
   }
 }
