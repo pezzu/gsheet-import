@@ -20,10 +20,10 @@ export interface Configuration {
         cc?: string;
         subject?: string;
       };
-    };
-    message: {
-      templateFile: string;
-      fields: { [key: string]: string };
+      message: {
+        templateFile: string;
+        fields: { [key: string]: string };
+      };
     };
   };
 }

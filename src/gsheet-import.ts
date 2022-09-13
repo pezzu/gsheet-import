@@ -23,8 +23,8 @@ async function main(): Promise<void> {
       const cells = await fetch(param.credentials, param.sheet);
       if (cells.length > 1) {
         const table = toHtmlTable(cells);
-        const template = readFileSync(param.notification.message.templateFile, "utf8");
-        const html = renderHtml(template, { ...param.notification.message.fields, content: table });
+        const template = readFileSync(param.notification.email.message.templateFile, "utf8");
+        const html = renderHtml(template, { ...param.notification.email.message.fields, content: table });
         await sendMail(param.notification.email.transport, { ...param.notification.email.header, html });
         print(`Mail sent to ${param.notification.email.header.to}`);
       }
