@@ -1,8 +1,9 @@
 import "dotenv/config";
 import { writeFile, unlink, NoParamCallback } from "fs";
 import { createAuth, fetch } from "./gsheet";
+import { nextName } from "../../tests/lib/tmpname";
 
-const CREDENTIALS_FILE = "test_credentials.json";
+const CREDENTIALS_FILE = nextName();
 // see https://docs.google.com/spreadsheets/d/1n5mK1NpGXcEsDo9N2ybFFTOlTC39KVEq2FUex3XRG7Q/edit
 const GOOGLE_TEST_CHEET = "1n5mK1NpGXcEsDo9N2ybFFTOlTC39KVEq2FUex3XRG7Q";
 

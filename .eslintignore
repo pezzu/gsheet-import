@@ -2,3 +2,4 @@ dist
 .eslintrc.js
 jest.config.js
 **/*.spec.ts
+tests

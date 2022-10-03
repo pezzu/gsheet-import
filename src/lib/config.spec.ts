@@ -1,5 +1,7 @@
-import { unlinkSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
 import { parseConfig, readConfig } from "./config";
+import { nextName, cleanup } from "../../tests/lib/tmpname";
+
 
 const CONFIG_STRING = `
 {
@@ -64,25 +66,25 @@ const CONFIG_JSON = {
 }
 
 describe("Parses configuration files", () => {
+  afterAll(async () => cleanup());
+
   it("Should parse a configuration from JSON string", () => {
     const config = parseConfig(CONFIG_STRING);
     expect(config).toEqual(CONFIG_JSON);
   });
 
   it("Should parse a configuration from JSON file", () => {
-    const confgiFile = "test_config.json";
+    const confgiFile = nextName();
     writeFileSync(confgiFile, CONFIG_STRING);
     const config = readConfig(confgiFile);
     expect(config).toEqual([CONFIG_JSON]);
-    unlinkSync(confgiFile);
   });
 
   it("Should parse a configuration from multiple JSON files", () => {
-    const confgiFile = "test_config.json";
+    const confgiFile = nextName();
     writeFileSync(confgiFile, CONFIG_STRING);
     const config = readConfig([confgiFile, confgiFile]);
     expect(config).toEqual([CONFIG_JSON, CONFIG_JSON]);
-    unlinkSync(confgiFile);
   });
 
   it.skip("Throws if validation fails", () => {
