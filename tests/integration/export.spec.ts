@@ -7,7 +7,7 @@ import { nextName, cleanup } from "../lib/tmpname";
 
 const mailslurp = new MailSlurp({ apiKey: process.env.MAILSLURP_API_KEY! });
 
-jest.setTimeout(30000);
+jest.setTimeout(40000);
 
 async function createCredentialsFile(fileName: string): Promise<void> {
   return writeFile(fileName, process.env.GCP_ACCESS_CREDENTIALS!);
@@ -78,7 +78,7 @@ describe("Command line utility exports data to HTML and send email", () => {
     await writeConfigFile(configFileName, JSON.stringify(config));
 
     const output = execFileSync("node", ["dist/gsheet-import.js", configFileName]);
-    const emails = await mailslurp.inboxController.getEmails({ inboxId: inbox.id });
+    const emails = await mailslurp.inboxController.getEmails({ inboxId: inbox.id, retryTimeout: 30000, minCount: 1 });
 
     expect(output.toString()).toEqual("Mail sent to " + inbox.emailAddress + "\n");
     expect(emails.length).toEqual(1);
