@@ -25,8 +25,8 @@ async function main(): Promise<void> {
         const table = toHtmlTable(cells);
         const template = readFileSync(param.notification.email.message.templateFile, "utf8");
         const html = renderHtml(template, { ...param.notification.email.message.fields, content: table });
-        await sendMail(param.notification.email.transport, { ...param.notification.email.header, html });
-        print(`Mail sent to ${param.notification.email.header.to}`);
+        const mail = await sendMail(param.notification.email.transport, { ...param.notification.email.header, html });
+        print(`Mail sent to ${mail.envelope.to}`);
       }
     } catch (e) {
       console.error(e);
