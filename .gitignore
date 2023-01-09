@@ -106,3 +106,4 @@ dist
 # Local settings
 /app-settings.json
 credentials.json
+configs
